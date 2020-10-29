@@ -1,3 +1,5 @@
+# Goland folder
+.idea
 # Binaries for programs and plugins
 *.exe
 *.exe~
