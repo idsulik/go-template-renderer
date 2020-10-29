@@ -2,4 +2,4 @@
 Online Go Template Renderer
 
 ## Example
-![Example](example.jpg "Example")
+![Example](https://github.com/idsulik/go-template-renderer/raw/master/example.jpg "Example")
