@@ -6,11 +6,20 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Online Go Template Renderer</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.css"
+          integrity="sha512-xIf9AdJauwKIVtrVRZ0i4nHP61Ogx9fSRAkCLecmE2dL/U8ioWpDvFCAy4dcfecN72HHB9+7FfQj3aiO68aaaw=="
+          crossorigin="anonymous"/>
     <style>
         body {
-            margin: 20px auto;
-            width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px 10px;
+            min-width: 700px;
+        }
+
+        .CodeMirror {
+            border: 1px solid #eee;
+            min-height: 50px;
+            height: auto;
         }
     </style>
 </head>
@@ -19,22 +28,49 @@
 {{ if .Error }}
     <h3 style="color: darkred;">{{ .Error }}</h3>
 {{ end }}
-<form action="/render" method="post">
-    <div>
-        <label for="variables">Variables(yaml):</label> <br>
-        <textarea name="variables" id="variables" cols="30" rows="10" style="width: 100%">{{ .Variables }}</textarea>
-    </div>
-    <div>
-        <label for="template">Template:</label><br>
-        <textarea name="template" id="template" cols="30" rows="20" style="width: 100%">{{ .Template }}</textarea>
-    </div>
 
-    <input type="submit" value="Render"/>
-</form>
+<div style="border-right: 3px solid #ccc; float: left; padding-right: 0.5%; overflow: auto; width: 49%">
+    <form action="/render" method="post">
+        <div>
+            <h3>Variables(yaml):</h3>
+            <textarea name="variables" id="variables" cols="30" rows="10"
+                      style="width: 100%">{{ .Variables }}</textarea>
+        </div>
+        <br>
+        <div>
+            <h3>Template:</h3>
+            <textarea name="template" id="template" cols="30" rows="20" style="width: 100%">{{ .Template }}</textarea>
+        </div>
 
-<h2>Result:</h2>
-<pre id="result">
-    {{- .Result -}}
-</pre>
+        <br>
+        <input type="submit" value="Render"/>
+    </form>
+</div>
+
+<div style="overflow:auto; padding-left: 0.5%; width: 49%">
+    <h3>Result:</h3>
+    <textarea id="result">
+        {{- if eq .Result "" -}}
+            // empty
+        {{- end -}}
+        {{- .Result -}}
+    </textarea>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/yaml/yaml.min.js"></script>
+<script>
+    CodeMirror.fromTextArea(document.getElementById('variables'), {
+        lineNumbers: true,
+        mode: 'yaml'
+    });
+    CodeMirror.fromTextArea(document.getElementById('template'), {
+        lineNumbers: true,
+    });
+    CodeMirror.fromTextArea(document.getElementById('result'), {
+        lineNumbers: true,
+        readOnly: true
+    });
+</script>
 </body>
 </html>
