@@ -21,7 +21,7 @@ type Values struct {
 
 var t *template.Template
 
-func New(port int) error {
+func New(port string) error {
 	var err error
 	t, err = template.ParseFiles("server/template.html")
 
@@ -32,7 +32,7 @@ func New(port int) error {
 	http.HandleFunc("/", mainHandler)
 	http.HandleFunc("/render", renderHandler)
 
-	return http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+	return http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
 }
 
 func mainHandler(writer http.ResponseWriter, _ *http.Request) {
