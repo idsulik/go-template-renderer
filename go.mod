@@ -1,4 +1,4 @@
-module gotemplate
+module github.com/idsulik/go-template-renderer
 
 go 1.13
 

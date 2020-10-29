@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gotemplate/server"
+	"github.com/idsulik/go-template-renderer/server"
 	"log"
 	"os"
 	"strconv"
