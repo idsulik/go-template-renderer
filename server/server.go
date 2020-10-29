@@ -10,9 +10,9 @@ import (
 
 type data struct {
 	Variables string
-	Template string
-	Result string
-	Error error
+	Template  string
+	Result    string
+	Error     error
 }
 
 type Values struct {
@@ -36,7 +36,7 @@ func New(port int) error {
 }
 
 func mainHandler(writer http.ResponseWriter, _ *http.Request) {
-	if err := t.Execute(writer, nil); err != nil {
+	if err := t.Execute(writer, data{}); err != nil {
 		panic(err)
 	}
 }
