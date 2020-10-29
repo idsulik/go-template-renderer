@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Online Go Template Renderer</title>
+
+    <style>
+        body {
+            margin: 20px auto;
+            width: 1200px;
+        }
+    </style>
+</head>
+<body>
+<h1>Online Go Template Renderer</h1>
+{{ if .Error }}
+    <h3 style="color: darkred;">{{ .Error }}</h3>
+{{ end }}
+<form action="/render" method="post">
+    <div>
+        <label for="variables">Variables(yaml):</label> <br>
+        <textarea name="variables" id="variables" cols="30" rows="10" style="width: 100%">{{ .Variables }}</textarea>
+    </div>
+    <div>
+        <label for="template">Template:</label><br>
+        <textarea name="template" id="template" cols="30" rows="20" style="width: 100%">{{ .Template }}</textarea>
+    </div>
+
+    <input type="submit" value="Render"/>
+</form>
+
+<h2>Result:</h2>
+<pre id="result">
+    {{- .Result -}}
+</pre>
+</body>
+</html>
