@@ -52,23 +52,21 @@ func renderHandler(writer http.ResponseWriter, request *http.Request) {
 
 	userTemplate, err := template.New("userTemplate").Parse(userTemplateStr)
 
-	if err != nil {
-		panic(err)
-	}
-
 	data := data{
 		Variables: userVariablesStr,
 		Template:  userTemplateStr,
+		Error:     err,
 	}
 
-	var tpl bytes.Buffer
-	if err := userTemplate.Execute(&tpl, userVariables); err != nil {
-		data.Error = err
+	if err == nil {
+		var tpl bytes.Buffer
+		if err := userTemplate.Execute(&tpl, userVariables); err != nil {
+			data.Error = err
+		}
+		data.Result = tpl.String()
 	}
-
-	data.Result = tpl.String()
 
 	if err := t.Execute(writer, data); err != nil {
-		panic(err)
+		http.Error(writer, err.Error(), 500)
 	}
 }
